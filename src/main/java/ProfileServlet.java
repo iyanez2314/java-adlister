@@ -7,14 +7,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "ViewProfileServlet", urlPatterns = "/profile")
-public class ViewProfileServlet extends HttpServlet {
+public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if(session.getAttribute("user") != null){
             String username = (String) session.getAttribute("user");
             request.setAttribute("name", username);
-            request.setAttribute("message", "Welcome " + username);
-            request.getRequestDispatcher("/profile.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/profile.jsp").forward(request, response);
         } else {
            response.sendRedirect("/login");
         }

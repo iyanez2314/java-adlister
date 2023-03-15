@@ -13,8 +13,7 @@ public class LoginServlet extends HttpServlet {
         if(session.getAttribute("user") != null){
             String username = (String) session.getAttribute("user");
             request.setAttribute("name", username);
-            request.setAttribute("message", "Welcome " + username);
-            request.getRequestDispatcher("/profile.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/profile.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
