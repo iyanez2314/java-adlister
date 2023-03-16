@@ -1,3 +1,6 @@
+import dao.Ad;
+import dao.DaoFactory;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +17,7 @@ public class CreateAdServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Ad ad = new Ad(
-            1, // for now we'll hardcode the user id
+            2, // for now we'll hardcode the user id
             request.getParameter("title"),
             request.getParameter("description")
         );
