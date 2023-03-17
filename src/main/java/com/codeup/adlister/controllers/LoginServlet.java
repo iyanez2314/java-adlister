@@ -1,6 +1,7 @@
 package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
+import com.codeup.adlister.models.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,18 +23,26 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        // TODO: find a record in your database that matches the submitted password
-
-        // TODO: make sure we find a user with that username
-
-        // TODO: check the submitted password against what you have in your database
-
         boolean validAttempt = false;
 
+        // TODO: find a record in your database that matches the submitted password
+            User foundUser = DaoFactory.getUsersDao().findByUsername(username);
+        // TODO: make sure we find a user with that username
+            if(foundUser != null){
+                String foundUserUsername = foundUser.getUsername();
+                String foundUserPassword = foundUser.getPassword();
+                validAttempt = foundUserUsername.equals(username) && foundUserPassword.equals(password);
+            } else {
+                try {
+                    request.getRequestDispatcher("WEB-INF/register.jsp").forward(request, response);
+                } catch (ServletException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        // TODO: check the submitted password against what you have in your database
         if (validAttempt) {
             // TODO: store the logged in user object in the session, instead of just the username
-            request.getSession().setAttribute("user", username);
+            request.getSession().setAttribute("user", foundUser.getUsername());
             response.sendRedirect("/profile");
         } else {
             response.sendRedirect("/login");
