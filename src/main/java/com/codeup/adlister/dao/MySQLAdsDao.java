@@ -55,6 +55,30 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    public Ad findById(String id){
+        String sql = "SELECT * FROM ads WHERE id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, id);
+            return extractAdById(stmt.executeQuery());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private Ad extractAdById(ResultSet rs) throws SQLException{
+        if(! rs.next()){
+            return null;
+        }
+        return new Ad(
+                rs.getLong("id"),
+                rs.getLong("user_id"),
+                rs.getString("title"),
+                rs.getString("description")
+        );
+    }
+
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
             rs.getLong("id"),
