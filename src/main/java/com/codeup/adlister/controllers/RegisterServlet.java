@@ -35,6 +35,17 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
+        // This is the conditional check to see if the username already exsist in our db
+        if(DaoFactory.getUsersDao().usernameExists(username)){
+            try {
+                request.setAttribute("error", "The username you are trying to use is already taken");
+                request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+
         // create and save a new user
         User user = new User(username, email, hashedPw);
         DaoFactory.getUsersDao().insert(user);

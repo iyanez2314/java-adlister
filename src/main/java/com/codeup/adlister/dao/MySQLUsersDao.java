@@ -64,6 +64,21 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    // This method will check to see if there is already a unique username in the database
+    public boolean usernameExists(String username){
+        String sql = "SELECT COUNT(*) FROM user WHERE username = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            // This will let us know if there is already a user with the passed in username in our database
+            return rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private User extractUser(ResultSet rs) throws SQLException {
         if (! rs.next()) {
             return null;

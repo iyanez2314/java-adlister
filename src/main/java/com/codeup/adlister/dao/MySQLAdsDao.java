@@ -26,6 +26,7 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    // Will list all ads in our DB
     @Override
     public List<Ad> all() {
         PreparedStatement stmt = null;
@@ -38,6 +39,7 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    // Will add a ad to our DB
     @Override
     public Long insert(Ad ad) {
         try {
@@ -55,6 +57,7 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    // Will find an Ad based on the id
     public Ad findById(String id){
         String sql = "SELECT * FROM ads WHERE id = ?";
         try {
