@@ -11,6 +11,8 @@
     <title>Title</title>
 </head>
 <body>
+    <h1>${user.username}</h1>
     <h1>${ad.title}</h1>
+    <h1>${ad.description}</h1>
 </body>
 </html>

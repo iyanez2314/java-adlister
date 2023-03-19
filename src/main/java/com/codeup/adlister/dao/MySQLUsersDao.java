@@ -51,6 +51,19 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+
+    // Will query my database for the user by the id and return the fetched user
+    public User findById(String id){
+        String sql = "SELECT * FROM user WHERE id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, id);
+            return extractUser(stmt.executeQuery());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private User extractUser(ResultSet rs) throws SQLException {
         if (! rs.next()) {
             return null;
