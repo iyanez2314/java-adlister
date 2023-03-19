@@ -16,13 +16,18 @@ import java.util.List;
 @WebServlet(name = "controllers.AdsIndexServlet", urlPatterns = "/ads")
 public class AdsIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: I need to refactor this I need to search the ads another way
-
+        // TODO: I need to add some error handling if the user is not in our database
         String seachedQuery = request.getParameter("search");
         List<Ad> ads;
         if(seachedQuery!= null && !seachedQuery.trim().isEmpty()){
-            ads = DaoFactory.getAdsDao().searchQuery(seachedQuery);
+            // Fetching the user with the associated username in the searchedQuery
+            User QueryedUser = DaoFactory.getUsersDao().findByUsername(seachedQuery);
+            // Extracting the userId
+            String usersId = String.valueOf(QueryedUser.getId());
+            // Setting out global variable to the all the ads associated with said user
+            ads = DaoFactory.getAdsDao().searchQuery(usersId);
         } else {
+            // If there is nothing searched we will set the global variable to all the ads in our database
             ads = DaoFactory.getAdsDao().all();
         }
         request.setAttribute("ads", ads);

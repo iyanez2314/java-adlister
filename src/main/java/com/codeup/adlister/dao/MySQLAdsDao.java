@@ -66,16 +66,15 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-    // TODO: Need to look over this again I might need to search for the add a different way
     @Override
-    public List<Ad> searchQuery(String username) {
-        PreparedStatement stmt = null;
+    public List<Ad> searchQuery(String userId) {
+       String sql = "SELECT * FROM ads WHERE user_id = ?";
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads");
-            ResultSet rs = stmt.executeQuery();
-            return createAdsFromResults(rs);
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, userId);
+            return createAdsFromResults(stmt.executeQuery());
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving all ads.", e);
+            throw new RuntimeException(e);
         }
     }
 
