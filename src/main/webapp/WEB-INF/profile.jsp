@@ -20,7 +20,7 @@
                 <p>${ad.description}</p>
                 <input type="hidden" name="userId" value="${ad.userId}">
                 <input type="hidden" name="adId" value="${ad.id}">
-                <input type="submit" class="btn btn-block btn-primary" value="Check out this ad!">
+                <input type="submit" class="btn btn-block btn-danger" value="Delete Add">
                 <a href="${pageContext.request.contextPath}/edit-ad?adId=${ad.id}" class="btn btn-block btn-secondary">Edit Ad</a>
             </form>
         </div>

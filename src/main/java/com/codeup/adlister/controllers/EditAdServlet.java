@@ -13,13 +13,16 @@ import java.io.IOException;
 public class EditAdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String adId = request.getParameter("adId");
+        User user = (User) request.getSession().getAttribute("user");
+        if(user != null){
+            String adId = request.getParameter("adId");
+            Ad adToEdit = DaoFactory.getAdsDao().findById(adId);
+            request.setAttribute("ad", adToEdit);
+            request.getRequestDispatcher("/WEB-INF/ads/edit.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("/login");
+        }
 
-        Ad adToEdit = DaoFactory.getAdsDao().findById(adId);
-
-        request.setAttribute("ad", adToEdit);
-
-        request.getRequestDispatcher("/WEB-INF/ads/edit.jsp").forward(request, response);
 
     }
 
@@ -30,10 +33,8 @@ public class EditAdServlet extends HttpServlet {
         String description = request.getParameter("description");
         User associatedUserWithAd = (User) request.getSession().getAttribute("user");
         Long associatedUserId = associatedUserWithAd.getId();
-
         Ad updatedAd = new Ad(associatedUserId, Long.parseLong(adId), title, description);
         DaoFactory.getAdsDao().updateAd(updatedAd);
-
         response.sendRedirect("/profile");
     }
 }

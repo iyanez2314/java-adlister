@@ -32,4 +32,11 @@ public class ViewProfileServlet extends HttpServlet {
             response.sendRedirect("/login");
         }
     }
+
+    protected  void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String adId = request.getParameter("adId");
+        Ad fetchedAdFromDb = DaoFactory.getAdsDao().findById(adId);
+        DaoFactory.getAdsDao().deleteAd(fetchedAdFromDb);
+        response.sendRedirect("/profile");
+    }
 }

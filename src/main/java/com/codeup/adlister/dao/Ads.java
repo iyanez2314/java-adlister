@@ -15,4 +15,7 @@ public interface Ads {
     List<Ad> searchQuery(String username);
 
     void updateAd(Ad ad);
+
+    void deleteAd(Ad ad);
+
 }
