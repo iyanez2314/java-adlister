@@ -13,4 +13,6 @@ public interface Ads {
     Ad findById(String id);
 
     List<Ad> searchQuery(String username);
+
+    void updateAd(Ad ad);
 }
