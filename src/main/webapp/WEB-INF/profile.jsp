@@ -2,9 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <jsp:include page="/WEB-INF/partials/head.jsp">
-        <jsp:param name="title" value="Your Profile" />
-    </jsp:include>
+<%--    <jsp:include page="/WEB-INF/partials/head.jsp">--%>
+<%--        <jsp:param name="title" value="Your Profile" />--%>
+<%--    </jsp:include>--%>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
